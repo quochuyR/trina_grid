@@ -41,6 +41,7 @@ class _RowGroupScreenState extends State<RowGroupScreen> {
       TrinaColumn(
         title: 'Planets',
         field: 'planets',
+        width: 100,
         type: TrinaColumnType.select([
           'Mercury',
           'Venus',
@@ -199,15 +200,18 @@ class _RowGroupScreenState extends State<RowGroupScreen> {
               enableLeftFrozenDivider: false
             ),
           ),
-          onLoaded: (e) => e.stateManager.setRowGroup(
+          onLoaded: (e) {
+            e.stateManager.setShowColumnFilter(true);
+            e.stateManager.setRowGroup(
             TrinaRowGroupByColumnDelegate(
               columns: [
-                // columnsA[0],
+                columnsA[0],
                 // columnsA[1],
               ],
               showFirstExpandableIcon: false,
             ),
-          ),
+          );
+          },
       ),
     );
   }

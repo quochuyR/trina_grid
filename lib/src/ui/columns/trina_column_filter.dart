@@ -1,10 +1,10 @@
 import 'dart:async';
-
-import 'package:flutter/foundation.dart';
+import '../ui.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:trina_grid/trina_grid.dart';
 
-import '../ui.dart';
+
 
 class TrinaColumnFilter extends TrinaStatefulWidget {
   final TrinaGridStateManager stateManager;
@@ -286,10 +286,13 @@ class TrinaColumnFilterState extends TrinaStateWithChange<TrinaColumnFilter> {
       }
     }
 
+    final darkTheme = Theme.of(context).brightness == Brightness.dark;
+
     return SizedBox(
       height: stateManager.columnFilterHeight,
       child: DecoratedBox(
         decoration: BoxDecoration(
+          color: darkTheme ? Colors.black : Colors.white,
           border: BorderDirectional(
             top: BorderSide(color: style.borderColor),
             end: style.enableColumnBorderVertical

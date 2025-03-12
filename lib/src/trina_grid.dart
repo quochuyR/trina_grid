@@ -701,10 +701,7 @@ class TrinaGridState extends TrinaStateWithChange<TrinaGrid> {
                   id: _StackName.bodyRows,
                   child: TrinaBodyRows(_stateManager),
                 ),
-                LayoutId(
-                  id: _StackName.bodyColumns,
-                  child: TrinaBodyColumns(_stateManager),
-                ),
+                
 
                 /// Body columns footer.
                 if (showColumnFooter)
@@ -716,13 +713,10 @@ class TrinaGridState extends TrinaStateWithChange<TrinaGrid> {
                 /// Left columns and rows.
                 if (showLeftFrozen) ...[
                   LayoutId(
-                    id: _StackName.leftFrozenColumns,
-                    child: TrinaLeftFrozenColumns(_stateManager),
-                  ),
-                  LayoutId(
                     id: _StackName.leftFrozenRows,
                     child: TrinaLeftFrozenRows(_stateManager),
                   ),
+                  
                   if(_stateManager.style.enableLeftFrozenDivider)
                   LayoutId(
                     id: _StackName.leftFrozenDivider,
@@ -737,6 +731,10 @@ class TrinaGridState extends TrinaStateWithChange<TrinaGrid> {
                       id: _StackName.leftFrozenColumnFooters,
                       child: TrinaLeftFrozenColumnsFooter(stateManager),
                     ),
+                  LayoutId(
+                    id: _StackName.leftFrozenColumns,
+                    child: TrinaLeftFrozenColumns(_stateManager),
+                  ),
                 ],
 
                 /// Right columns and rows.
@@ -836,6 +834,11 @@ class TrinaGridState extends TrinaStateWithChange<TrinaGrid> {
                       child: widget.noRowsWidget!,
                     ),
                   ),
+
+                LayoutId(
+                  id: _StackName.bodyColumns,
+                  child: TrinaBodyColumns(_stateManager),
+                ),
               ],
             );
           },

@@ -1,7 +1,7 @@
+import 'ui.dart';
 import 'package:flutter/material.dart';
 import 'package:trina_grid/trina_grid.dart';
 
-import 'ui.dart';
 
 class TrinaBaseColumn extends TrinaStatefulWidget
     implements TrinaVisibilityLayoutChild {
