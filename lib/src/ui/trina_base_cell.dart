@@ -287,9 +287,6 @@ class _CellContainerState extends TrinaStateWithChange<_CellContainer> {
         ),
       );
     } else {
-      if(widget.column.field == "planets" && widget.rowIdx == 5){
-        debugPrint(widget.cell.toString());
-      }
       return BoxDecoration(
         color: isGroupedRowCell ? cellColorGroupedRow : null,
         border: enableCellVerticalBorder
@@ -308,6 +305,7 @@ class _CellContainerState extends TrinaStateWithChange<_CellContainer> {
 
   @override
   Widget build(BuildContext context) {
+    
     return DecoratedBox(
       decoration: _decoration,
       child: Padding(

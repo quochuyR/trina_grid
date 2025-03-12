@@ -1,13 +1,13 @@
-import 'dart:math';
 import 'dart:ui';
-
+import 'dart:math';
+import 'ui/ui.dart';
+import 'helper/platform_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart' show Intl;
 import 'package:trina_grid/trina_grid.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
-import 'helper/platform_helper.dart';
-import 'ui/ui.dart';
+
 
 typedef TrinaOnLoadedEventCallback =
     void Function(TrinaGridOnLoadedEvent event);
@@ -723,6 +723,7 @@ class TrinaGridState extends TrinaStateWithChange<TrinaGrid> {
                     id: _StackName.leftFrozenRows,
                     child: TrinaLeftFrozenRows(_stateManager),
                   ),
+                  if(_stateManager.style.enableLeftFrozenDivider)
                   LayoutId(
                     id: _StackName.leftFrozenDivider,
                     child: TrinaShadowLine(

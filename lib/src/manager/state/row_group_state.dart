@@ -1,5 +1,5 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
+import 'package:collection/collection.dart';
 import 'package:trina_grid/trina_grid.dart';
 
 /*
@@ -284,10 +284,10 @@ mixin RowGroupState implements ITrinaGridState {
         childrenFilter: (r) => r.type.isGroup && r.type.group.expanded
             ? r.type.group.children.iterator
             : null,
-      );
+      ).toList();
 
       final idx = refRows.indexOf(rowGroup);
-
+      
       refRows.insertAll(idx + 1, children);
     }
 

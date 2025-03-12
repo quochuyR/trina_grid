@@ -1,7 +1,7 @@
+import 'ui.dart';
 import 'package:flutter/material.dart';
 import 'package:trina_grid/trina_grid.dart';
 
-import 'ui.dart';
 
 class TrinaLeftFrozenRows extends TrinaStatefulWidget {
   final TrinaGridStateManager stateManager;
@@ -77,6 +77,9 @@ class TrinaLeftFrozenRowsState
 
   @override
   Widget build(BuildContext context) {
+
+    final isGroupRow = _scrollableRows.firstOrNull?.type.isGroup;
+    
     return Column(
       children: [
         // Frozen top rows
@@ -94,6 +97,7 @@ class TrinaLeftFrozenRowsState
             controller: _scroll,
             scrollDirection: Axis.vertical,
             physics: const ClampingScrollPhysics(),
+            clipBehavior: isGroupRow == true ? Clip.none : Clip.hardEdge,
             itemCount: _scrollableRows.length,
             itemExtent: stateManager.rowTotalHeight,
             itemBuilder: (ctx, i) =>

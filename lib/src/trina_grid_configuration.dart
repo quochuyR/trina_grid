@@ -1,8 +1,8 @@
-import 'package:collection/collection.dart' show IterableExtension;
-import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:trina_grid/trina_grid.dart';
+import 'package:collection/collection.dart' show IterableExtension;
 
 class TrinaGridConfiguration {
   /// When you select a value in the pop-up grid, it moves down.
@@ -217,6 +217,7 @@ class TrinaGridStyleConfig {
     this.enableColumnBorderHorizontal = true,
     this.enableCellBorderVertical = true,
     this.enableCellBorderHorizontal = true,
+    this.enableLeftFrozenDivider = true,
     this.enableRowColorAnimation = false,
     this.enableRowHoverColor = false,
     this.gridBackgroundColor = Colors.white,
@@ -289,6 +290,7 @@ class TrinaGridStyleConfig {
     this.enableColumnBorderHorizontal = true,
     this.enableCellBorderVertical = true,
     this.enableCellBorderHorizontal = true,
+    this.enableLeftFrozenDivider = true,
     this.enableRowColorAnimation = false,
     this.enableRowHoverColor = false,
     this.gridBackgroundColor = const Color(0xFF111111),
@@ -369,6 +371,9 @@ class TrinaGridStyleConfig {
 
   /// Enable the horizontal border of [TrinaCell].
   final bool enableCellBorderHorizontal;
+
+  /// Enable the vertical border of [TrinaGrid].
+  final bool enableLeftFrozenDivider;
 
   /// Animation of background color transition of rows,
   /// such as when the current row or rows are dragged.

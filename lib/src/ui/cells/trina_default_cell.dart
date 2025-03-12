@@ -133,12 +133,14 @@ class _TrinaDefaultCellState extends TrinaStateWithChange<TrinaDefaultCell> {
 
   @override
   Widget build(BuildContext context) {
+
     int depth = 0; //
     TrinaRow? row = widget.row;
     while (row?.parent != null) {
       depth++;
       row = row?.parent;
     }
+
     final cellWidget = _DefaultCellWidget(
       stateManager: stateManager,
       rowIdx: widget.rowIdx,
@@ -184,6 +186,7 @@ class _TrinaDefaultCellState extends TrinaStateWithChange<TrinaDefaultCell> {
                   ),
       );
     }
+
 
     return Row(children: [
       if (_canRowDrag)
@@ -510,15 +513,17 @@ class _DefaultCellWidget extends StatelessWidget {
                   stateManager.rowGroupDelegate!, row);
     }
 
+    final isGroup = groupCountText != null;
+
     return Text(
-      "$_text${groupCountText != null ? " (SL: $groupCountText)" : ""}",
+      "$_text${ isGroup ? " (SL: $groupCountText)" : ""}",
       style: stateManager.configuration.style.cellTextStyle.copyWith(
         decoration: TextDecoration.none,
         fontWeight: FontWeight.normal,
       ),
-      overflow: TextOverflow.visible,
-      softWrap: false,
-      maxLines: 1,
+      overflow: isGroup ? TextOverflow.visible : TextOverflow.ellipsis,
+      softWrap: isGroup ? false : null,
+      maxLines: isGroup ? 1 : null,
       textAlign: column.textAlign.value,
     );
   }
