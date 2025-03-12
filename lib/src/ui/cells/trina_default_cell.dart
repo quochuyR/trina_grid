@@ -1,7 +1,7 @@
+import '../ui.dart';
 import 'package:flutter/material.dart';
 import 'package:trina_grid/trina_grid.dart';
 
-import '../ui.dart';
 
 typedef DragUpdatedCallback = Function(Offset offset);
 
@@ -33,7 +33,7 @@ class TrinaDefaultCell extends TrinaStatefulWidget {
     final count = compactCount
         ? delegate.compactNumber(row.type.group.children.length)
         : row.type.group.children.length.toString();
-    return '($count)';
+    return count;
   }
 
   static TextStyle groupCountTextStyle(TrinaGridStyleConfig style) {
@@ -209,14 +209,8 @@ class _TrinaDefaultCellState extends TrinaStateWithChange<TrinaDefaultCell> {
         ),
       if (spacingWidget != null) spacingWidget,
       if (expandIcon != null) expandIcon,
-      Expanded(child: cellWidget),
-      if (TrinaDefaultCell.showGroupCount(
-          stateManager.rowGroupDelegate, widget.cell))
-        Text(
-          TrinaDefaultCell.groupCountText(
-              stateManager.rowGroupDelegate!, widget.row),
-          style: TrinaDefaultCell.groupCountTextStyle(stateManager.style),
-        ),
+      Flexible(child: cellWidget),
+      
     ]);
   }
 }
@@ -508,13 +502,23 @@ class _DefaultCellWidget extends StatelessWidget {
       ));
     }
 
+    String? groupCountText;
+
+    if (TrinaDefaultCell.showGroupCount(
+          stateManager.rowGroupDelegate, cell)) {
+      groupCountText = TrinaDefaultCell.groupCountText(
+                  stateManager.rowGroupDelegate!, row);
+    }
+
     return Text(
-      _text,
+      "$_text${groupCountText != null ? " (SL: $groupCountText)" : ""}",
       style: stateManager.configuration.style.cellTextStyle.copyWith(
         decoration: TextDecoration.none,
         fontWeight: FontWeight.normal,
       ),
-      overflow: TextOverflow.ellipsis,
+      overflow: TextOverflow.visible,
+      softWrap: false,
+      maxLines: 1,
       textAlign: column.textAlign.value,
     );
   }

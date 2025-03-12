@@ -1,9 +1,9 @@
+import 'ui.dart';
 import 'package:flutter/material.dart';
 import 'package:trina_grid/trina_grid.dart';
 import 'package:trina_grid/src/helper/platform_helper.dart';
 import 'package:trina_grid/src/helper/trina_double_tap_detector.dart';
 
-import 'ui.dart';
 
 class TrinaBaseCell extends StatelessWidget
     implements TrinaVisibilityLayoutChild {
@@ -287,14 +287,19 @@ class _CellContainerState extends TrinaStateWithChange<_CellContainer> {
         ),
       );
     } else {
+      if(widget.column.field == "planets" && widget.rowIdx == 5){
+        debugPrint(widget.cell.toString());
+      }
       return BoxDecoration(
         color: isGroupedRowCell ? cellColorGroupedRow : null,
         border: enableCellVerticalBorder
             ? BorderDirectional(
-                end: BorderSide(
-                  color: borderColor,
-                  width: 1.0,
-                ),
+                end: !widget.row.type.isGroup
+                  ? BorderSide(
+                      color: borderColor,
+                      width:  1.0,
+                    )
+                  : BorderSide.none,
               )
             : null,
       );
