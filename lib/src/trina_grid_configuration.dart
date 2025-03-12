@@ -372,7 +372,7 @@ class TrinaGridStyleConfig {
   /// Enable the horizontal border of [TrinaCell].
   final bool enableCellBorderHorizontal;
 
-  /// Enable the vertical border of [TrinaGrid].
+  /// Enable the frozen vertical border of [TrinaGrid].
   final bool enableLeftFrozenDivider;
 
   /// Animation of background color transition of rows,
@@ -558,6 +558,7 @@ class TrinaGridStyleConfig {
     bool? enableColumnBorderHorizontal,
     bool? enableCellBorderVertical,
     bool? enableCellBorderHorizontal,
+    bool? enableLeftFrozenDivider,
     bool? enableRowColorAnimation,
     Color? gridBackgroundColor,
     Color? rowColor,
@@ -605,6 +606,8 @@ class TrinaGridStyleConfig {
     return TrinaGridStyleConfig(
       enableGridBorderShadow:
           enableGridBorderShadow ?? this.enableGridBorderShadow,
+      enableLeftFrozenDivider:
+          enableLeftFrozenDivider ?? this.enableLeftFrozenDivider,
       enableColumnBorderVertical:
           enableColumnBorderVertical ?? this.enableColumnBorderVertical,
       enableColumnBorderHorizontal:

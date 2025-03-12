@@ -212,7 +212,7 @@ class _TrinaDefaultCellState extends TrinaStateWithChange<TrinaDefaultCell> {
         ),
       if (spacingWidget != null) spacingWidget,
       if (expandIcon != null) expandIcon,
-      Flexible(child: cellWidget),
+      Expanded(child: cellWidget),
       
     ]);
   }
