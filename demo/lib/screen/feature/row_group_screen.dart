@@ -212,6 +212,9 @@ class _RowGroupScreenState extends State<RowGroupScreen> {
             ),
           );
           },
+        createFooter: (stateManager) {
+          return TrinaPagination(stateManager);
+        },
       ),
     );
   }

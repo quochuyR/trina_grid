@@ -800,6 +800,7 @@ class TrinaGridState extends TrinaStateWithChange<TrinaGrid> {
 
                 /// Footer and divider.
                 if (_stateManager.showFooter) ...[
+                  LayoutId(id: _StackName.footer, child: _footer!),
                   LayoutId(
                     id: _StackName.footerDivider,
                     child: TrinaShadowLine(
@@ -809,7 +810,6 @@ class TrinaGridState extends TrinaStateWithChange<TrinaGrid> {
                       reverse: true,
                     ),
                   ),
-                  LayoutId(id: _StackName.footer, child: _footer!),
                 ],
 
                 /// Loading screen.
