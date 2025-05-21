@@ -1,13 +1,13 @@
-import 'dart:math';
 import 'dart:ui';
-
+import 'dart:math';
+import 'ui/ui.dart';
+import 'helper/platform_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart' show Intl;
 import 'package:trina_grid/trina_grid.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
-import 'helper/platform_helper.dart';
-import 'ui/ui.dart';
+
 
 typedef TrinaOnLoadedEventCallback = void Function(
     TrinaGridOnLoadedEvent event);
@@ -735,10 +735,7 @@ class TrinaGridState extends TrinaStateWithChange<TrinaGrid> {
                   id: _StackName.bodyRows,
                   child: TrinaBodyRows(_stateManager),
                 ),
-                LayoutId(
-                  id: _StackName.bodyColumns,
-                  child: TrinaBodyColumns(_stateManager),
-                ),
+                
 
                 /// Body columns footer.
                 if (showColumnFooter)
@@ -750,13 +747,11 @@ class TrinaGridState extends TrinaStateWithChange<TrinaGrid> {
                 /// Left columns and rows.
                 if (showLeftFrozen) ...[
                   LayoutId(
-                    id: _StackName.leftFrozenColumns,
-                    child: TrinaLeftFrozenColumns(_stateManager),
-                  ),
-                  LayoutId(
                     id: _StackName.leftFrozenRows,
                     child: TrinaLeftFrozenRows(_stateManager),
                   ),
+                  
+                  if(_stateManager.style.enableLeftFrozenDivider)
                   LayoutId(
                     id: _StackName.leftFrozenDivider,
                     child: TrinaShadowLine(
@@ -770,6 +765,10 @@ class TrinaGridState extends TrinaStateWithChange<TrinaGrid> {
                       id: _StackName.leftFrozenColumnFooters,
                       child: TrinaLeftFrozenColumnsFooter(stateManager),
                     ),
+                  LayoutId(
+                    id: _StackName.leftFrozenColumns,
+                    child: TrinaLeftFrozenColumns(_stateManager),
+                  ),
                 ],
 
                 /// Right columns and rows.
@@ -835,6 +834,7 @@ class TrinaGridState extends TrinaStateWithChange<TrinaGrid> {
 
                 /// Footer and divider.
                 if (_stateManager.showFooter) ...[
+                  LayoutId(id: _StackName.footer, child: _footer!),
                   LayoutId(
                     id: _StackName.footerDivider,
                     child: TrinaShadowLine(
@@ -844,7 +844,6 @@ class TrinaGridState extends TrinaStateWithChange<TrinaGrid> {
                       reverse: true,
                     ),
                   ),
-                  LayoutId(id: _StackName.footer, child: _footer!),
                 ],
 
                 /// Loading screen.
@@ -870,6 +869,11 @@ class TrinaGridState extends TrinaStateWithChange<TrinaGrid> {
                       child: widget.noRowsWidget!,
                     ),
                   ),
+
+                LayoutId(
+                  id: _StackName.bodyColumns,
+                  child: TrinaBodyColumns(_stateManager),
+                ),
               ],
             );
           },

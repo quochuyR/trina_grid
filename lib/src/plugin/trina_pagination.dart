@@ -1,9 +1,9 @@
 import 'dart:math';
-
+import '../ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:trina_grid/trina_grid.dart';
 
-import '../ui/ui.dart';
+
 
 /// A widget for client-side pagination.
 ///
@@ -198,10 +198,13 @@ class TrinaPaginationState extends _TrinaPaginationStateWithChange {
 
         final Color disabledIconColor =
             stateManager.configuration.style.disabledIconColor;
+        
+        final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
 
-        return SizedBox(
+        return Container(
           width: _maxWidth,
           height: stateManager.footerHeight,
+          color: isDarkTheme ? Colors.black : Colors.white,
           child: Align(
             alignment: Alignment.center,
             child: SingleChildScrollView(

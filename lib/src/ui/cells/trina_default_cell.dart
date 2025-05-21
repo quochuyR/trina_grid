@@ -1,7 +1,7 @@
+import '../ui.dart';
 import 'package:flutter/material.dart';
 import 'package:trina_grid/trina_grid.dart';
 
-import '../ui.dart';
 
 typedef DragUpdatedCallback = Function(Offset offset);
 
@@ -33,7 +33,7 @@ class TrinaDefaultCell extends TrinaStatefulWidget {
     final count = compactCount
         ? delegate.compactNumber(row.type.group.children.length)
         : row.type.group.children.length.toString();
-    return '($count)';
+    return count;
   }
 
   static TextStyle groupCountTextStyle(TrinaGridStyleConfig style) {
@@ -133,12 +133,14 @@ class _TrinaDefaultCellState extends TrinaStateWithChange<TrinaDefaultCell> {
 
   @override
   Widget build(BuildContext context) {
+
     int depth = 0; //
     TrinaRow? row = widget.row;
     while (row?.parent != null) {
       depth++;
       row = row?.parent;
     }
+
     final cellWidget = _DefaultCellWidget(
       stateManager: stateManager,
       rowIdx: widget.rowIdx,
@@ -185,6 +187,7 @@ class _TrinaDefaultCellState extends TrinaStateWithChange<TrinaDefaultCell> {
       );
     }
 
+
     return Row(children: [
       if (_canRowDrag)
         _RowDragIconWidget(
@@ -210,13 +213,7 @@ class _TrinaDefaultCellState extends TrinaStateWithChange<TrinaDefaultCell> {
       if (spacingWidget != null) spacingWidget,
       if (expandIcon != null) expandIcon,
       Expanded(child: cellWidget),
-      if (TrinaDefaultCell.showGroupCount(
-          stateManager.rowGroupDelegate, widget.cell))
-        Text(
-          TrinaDefaultCell.groupCountText(
-              stateManager.rowGroupDelegate!, widget.row),
-          style: TrinaDefaultCell.groupCountTextStyle(stateManager.style),
-        ),
+      
     ]);
   }
 }
@@ -509,13 +506,25 @@ class _DefaultCellWidget extends StatelessWidget {
       ));
     }
 
+    String? groupCountText;
+
+    if (TrinaDefaultCell.showGroupCount(
+          stateManager.rowGroupDelegate, cell)) {
+      groupCountText = TrinaDefaultCell.groupCountText(
+                  stateManager.rowGroupDelegate!, row);
+    }
+
+    final isGroup = groupCountText != null;
+
     return Text(
-      _text,
+      "$_text${ isGroup ? " (SL: $groupCountText)" : ""}",
       style: stateManager.configuration.style.cellTextStyle.copyWith(
         decoration: TextDecoration.none,
         fontWeight: FontWeight.normal,
       ),
-      overflow: TextOverflow.ellipsis,
+      overflow: isGroup ? TextOverflow.visible : TextOverflow.ellipsis,
+      softWrap: isGroup ? false : null,
+      maxLines: isGroup ? 1 : null,
       textAlign: column.textAlign.value,
     );
   }

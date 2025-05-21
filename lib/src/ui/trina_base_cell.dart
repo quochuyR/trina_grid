@@ -1,11 +1,11 @@
+import 'ui.dart';
 import 'package:flutter/material.dart';
 import 'package:trina_grid/trina_grid.dart';
 import 'package:trina_grid/src/helper/platform_helper.dart';
-import 'package:trina_grid/src/helper/trina_double_tap_detector.dart';
 import 'package:trina_grid/src/ui/cells/trina_boolean_cell.dart';
 import 'package:trina_grid/src/ui/cells/trina_date_time_cell.dart';
+import 'package:trina_grid/src/helper/trina_double_tap_detector.dart';
 
-import 'ui.dart';
 
 class TrinaBaseCell extends StatelessWidget
     implements TrinaVisibilityLayoutChild {
@@ -303,7 +303,12 @@ class _CellContainerState extends TrinaStateWithChange<_CellContainer> {
                 : null,
         border: enableCellVerticalBorder
             ? BorderDirectional(
-                end: BorderSide(color: borderColor, width: 1.0),
+                end: !widget.row.type.isGroup
+                  ? BorderSide(
+                      color: borderColor,
+                      width:  1.0,
+                    )
+                  : BorderSide.none,
               )
             : null,
       );
@@ -312,6 +317,7 @@ class _CellContainerState extends TrinaStateWithChange<_CellContainer> {
 
   @override
   Widget build(BuildContext context) {
+    
     return DecoratedBox(
       decoration: _decoration,
       child: Padding(padding: widget.cellPadding, child: widget.child),

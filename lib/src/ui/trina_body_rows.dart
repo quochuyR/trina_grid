@@ -1,10 +1,10 @@
+import 'ui.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:trina_grid/src/widgets/trina_horizontal_scroll_bar.dart';
 import 'package:trina_grid/src/widgets/trina_vertical_scroll_bar.dart';
 import 'package:trina_grid/trina_grid.dart';
 
-import 'ui.dart';
 
 class TrinaBodyRows extends TrinaStatefulWidget {
   final TrinaGridStateManager stateManager;

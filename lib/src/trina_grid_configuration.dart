@@ -1,8 +1,8 @@
-import 'package:collection/collection.dart' show IterableExtension;
-import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:trina_grid/trina_grid.dart';
+import 'package:collection/collection.dart' show IterableExtension;
 
 class TrinaGridConfiguration {
   /// When you select a value in the pop-up grid, it moves down.
@@ -217,6 +217,7 @@ class TrinaGridStyleConfig {
     this.enableColumnBorderHorizontal = true,
     this.enableCellBorderVertical = true,
     this.enableCellBorderHorizontal = true,
+    this.enableLeftFrozenDivider = true,
     this.enableRowColorAnimation = false,
     this.enableRowHoverColor = false,
     this.filterIcon = const Icon(Icons.filter_alt_outlined),
@@ -293,6 +294,7 @@ class TrinaGridStyleConfig {
     this.enableColumnBorderHorizontal = true,
     this.enableCellBorderVertical = true,
     this.enableCellBorderHorizontal = true,
+    this.enableLeftFrozenDivider = true,
     this.enableRowColorAnimation = false,
     this.enableRowHoverColor = false,
     this.filterIcon = const Icon(Icons.filter_alt_outlined),
@@ -377,6 +379,9 @@ class TrinaGridStyleConfig {
 
   /// Enable the horizontal border of [TrinaCell].
   final bool enableCellBorderHorizontal;
+
+  /// Enable the frozen vertical border of [TrinaGrid].
+  final bool enableLeftFrozenDivider;
 
   /// Animation of background color transition of rows,
   /// such as when the current row or rows are dragged.
@@ -574,6 +579,7 @@ class TrinaGridStyleConfig {
     bool? enableColumnBorderHorizontal,
     bool? enableCellBorderVertical,
     bool? enableCellBorderHorizontal,
+    bool? enableLeftFrozenDivider,
     bool? enableRowColorAnimation,
     Icon? filterIcon,
     Color? gridBackgroundColor,
@@ -626,6 +632,8 @@ class TrinaGridStyleConfig {
     return TrinaGridStyleConfig(
       enableGridBorderShadow:
           enableGridBorderShadow ?? this.enableGridBorderShadow,
+      enableLeftFrozenDivider:
+          enableLeftFrozenDivider ?? this.enableLeftFrozenDivider,
       enableColumnBorderVertical:
           enableColumnBorderVertical ?? this.enableColumnBorderVertical,
       enableColumnBorderHorizontal:

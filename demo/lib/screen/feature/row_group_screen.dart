@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:trina_grid/trina_grid.dart';
-
 import '../../dummy_data/development.dart';
+import 'package:trina_grid/trina_grid.dart';
 import '../../widget/trina_example_screen.dart';
+
 
 class RowGroupScreen extends StatefulWidget {
   static const routeName = 'feature/row-group';
@@ -24,6 +24,15 @@ class _RowGroupScreenState extends State<RowGroupScreen> {
 
   late TrinaGridStateManager stateManager;
 
+  bool _showText(TrinaGridStateManager stateManager, TrinaCell cell) {
+    if (!stateManager.enabledRowGroups) {
+      return true;
+    }
+
+    return stateManager.rowGroupDelegate!.isExpandableCell(cell) ||
+        stateManager.rowGroupDelegate!.isEditableCell(cell);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -32,6 +41,7 @@ class _RowGroupScreenState extends State<RowGroupScreen> {
       TrinaColumn(
         title: 'Planets',
         field: 'planets',
+        width: 100,
         type: TrinaColumnType.select([
           'Mercury',
           'Venus',
@@ -40,11 +50,25 @@ class _RowGroupScreenState extends State<RowGroupScreen> {
           'Jupiter',
           'Saturn',
           'Uranus',
-          'Neptune',
+          'Neptune Neptune Neptune Neptune Neptune Neptune',
           'Trina',
         ]),
+        frozen: TrinaColumnFrozen.start,
+        // renderer: (rendererContext) {
+          
+        //   if(_showText(rendererContext.stateManager, rendererContext.cell)){
+        //     return Text(
+        //       "${rendererContext.cell.value} SL", 
+        //       overflow: TextOverflow.visible, maxLines: 1, softWrap: false,);
+
+        //   }else{
+        //     return SizedBox.shrink();
+        //   }
+        // },
       ),
-      TrinaColumn(title: 'Users', field: 'users', type: TrinaColumnType.text()),
+      TrinaColumn(
+        title: 'Users', field: 'users', type: TrinaColumnType.text(), width: 50
+      ),
       TrinaColumn(title: 'Date', field: 'date', type: TrinaColumnType.date()),
       TrinaColumn(title: 'Time', field: 'time', type: TrinaColumnType.time()),
     ]);
@@ -127,45 +151,70 @@ class _RowGroupScreenState extends State<RowGroupScreen> {
       topContents: const [
         Text('Grouping rows in a column or tree structure.'),
       ],
-      body: TrinaDualGrid(
-        gridPropsA: TrinaDualGridProps(
-          columns: columnsA,
+      // body: TrinaDualGrid(
+      //   gridPropsA: TrinaDualGridProps(
+      //     columns: columnsA,
+      //     rows: rowsA,
+      //     configuration: const TrinaGridConfiguration(
+      //       style: TrinaGridStyleConfig(
+      //         cellColorGroupedRow: Color(0x80F6F6F6),
+      //       ),
+      //     ),
+      //     onLoaded: (e) => e.stateManager.setRowGroup(
+      //       TrinaRowGroupByColumnDelegate(
+      //         columns: [
+      //           columnsA[0],
+      //           columnsA[1],
+      //         ],
+      //         showFirstExpandableIcon: false,
+      //       ),
+      //     ),
+      //   ),
+      //   gridPropsB: TrinaDualGridProps(
+      //     columns: columnsB,
+      //     rows: rowsB,
+      //     configuration: const TrinaGridConfiguration(
+      //       style: TrinaGridStyleConfig(
+      //         cellColorGroupedRow: Color(0x80F6F6F6),
+      //       ),
+      //       columnSize: TrinaGridColumnSizeConfig(
+      //         autoSizeMode: TrinaAutoSizeMode.equal,
+      //       ),
+      //     ),
+      //     onLoaded: (e) {
+      //       e.stateManager.setRowGroup(TrinaRowGroupTreeDelegate(
+      //         resolveColumnDepth: (column) =>
+      //             e.stateManager.columnIndex(column),
+      //         showText: (cell) => true,
+      //         showFirstExpandableIcon: true,
+      //       ));
+      //     },
+      //   ),
+      // ),
+      body: TrinaGrid(
+            columns: columnsA,
           rows: rowsA,
           configuration: const TrinaGridConfiguration(
             style: TrinaGridStyleConfig(
               cellColorGroupedRow: Color(0x80F6F6F6),
-            ),
-          ),
-          onLoaded: (e) => e.stateManager.setRowGroup(
-            TrinaRowGroupByColumnDelegate(
-              columns: [
-                columnsA[0],
-                columnsA[1],
-              ],
-              showFirstExpandableIcon: false,
-            ),
-          ),
-        ),
-        gridPropsB: TrinaDualGridProps(
-          columns: columnsB,
-          rows: rowsB,
-          configuration: const TrinaGridConfiguration(
-            style: TrinaGridStyleConfig(
-              cellColorGroupedRow: Color(0x80F6F6F6),
-            ),
-            columnSize: TrinaGridColumnSizeConfig(
-              autoSizeMode: TrinaAutoSizeMode.equal,
+              enableLeftFrozenDivider: false
             ),
           ),
           onLoaded: (e) {
-            e.stateManager.setRowGroup(TrinaRowGroupTreeDelegate(
-              resolveColumnDepth: (column) =>
-                  e.stateManager.columnIndex(column),
-              showText: (cell) => true,
-              showFirstExpandableIcon: true,
-            ));
+            e.stateManager.setShowColumnFilter(true);
+            e.stateManager.setRowGroup(
+            TrinaRowGroupByColumnDelegate(
+              columns: [
+                columnsA[0],
+                // columnsA[1],
+              ],
+              showFirstExpandableIcon: false,
+            ),
+          );
           },
-        ),
+        createFooter: (stateManager) {
+          return TrinaPagination(stateManager);
+        },
       ),
     );
   }
