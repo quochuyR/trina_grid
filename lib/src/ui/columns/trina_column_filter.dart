@@ -1,9 +1,9 @@
 import 'dart:async';
 import '../ui.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:trina_grid/trina_grid.dart';
+import 'package:trina_grid/src/widgets/multi_line_column_filter.dart';
 
 
 
@@ -304,46 +304,53 @@ class TrinaColumnFilterState extends TrinaStateWithChange<TrinaColumnFilter> {
       }
     }
 
-    final darkTheme = Theme.of(context).brightness == Brightness.dark;
+    Widget? w = filterDelegate?.filterWidgetBuilder?.call(
+        _focusNode, _controller, _enabled, _handleOnChanged, stateManager);
 
+    if (filterDelegate?.isMultiItems == true) {
+      w = MultiLineColumnFilter(
+        focusNode: _focusNode,
+        controller: _controller,
+        handleOnChanged: _handleOnChanged,
+        stateManager: stateManager,
+      );
+    } else {
+      w ??= TextField(
+        focusNode: _focusNode,
+        controller: _controller,
+        enabled: _enabled,
+        style: style.cellTextStyle,
+        onTap: _handleOnTap,
+        onChanged: _handleOnChanged,
+        onEditingComplete: _handleOnEditingComplete,
+        decoration: InputDecoration(
+          suffixIcon: suffixIcon,
+          hintText: filterDelegate?.filterHintText ??
+              (_enabled ? widget.column.defaultFilter.title : ''),
+          filled: true,
+          hintStyle: TextStyle(color: filterDelegate?.filterHintTextColor),
+          fillColor: _textFieldColor,
+          border: _border,
+          enabledBorder: _border,
+          disabledBorder: _disabledBorder,
+          focusedBorder: _enabledBorder,
+          contentPadding: const EdgeInsets.all(5),
+        ),
+      );
+    }
+    
+    final darkTheme = Theme.of(context).brightness == Brightness.dark;
     return SizedBox(
       height: stateManager.columnFilterHeight,
       child: DecoratedBox(
         decoration: BoxDecoration(
+          color: darkTheme ? Colors.black : Colors.white,
           border: BorderDirectional(
             top: BorderSide(color: style.borderColor),
             end: style.enableColumnBorderVertical
                 ? BorderSide(color: style.borderColor)
                 : BorderSide.none,
           ),
-        ),
-        child: Padding(
-          padding: _padding,
-          child: filterDelegate?.filterWidgetBuilder?.call(_focusNode,
-                  _controller, _enabled, _handleOnChanged, stateManager) ??
-              TextField(
-                focusNode: _focusNode,
-                controller: _controller,
-                enabled: _enabled,
-                style: style.cellTextStyle,
-                onTap: _handleOnTap,
-                onChanged: _handleOnChanged,
-                onEditingComplete: _handleOnEditingComplete,
-                decoration: InputDecoration(
-                  suffixIcon: suffixIcon,
-                  hintText: filterDelegate?.filterHintText ??
-                      (_enabled ? widget.column.defaultFilter.title : ''),
-                  filled: true,
-                  hintStyle:
-                      TextStyle(color: filterDelegate?.filterHintTextColor),
-                  fillColor: _textFieldColor,
-                  border: _border,
-                  enabledBorder: _border,
-                  disabledBorder: _disabledBorder,
-                  focusedBorder: _enabledBorder,
-                  contentPadding: const EdgeInsets.all(5),
-                ),
-              ),
         ),
         child: Padding(padding: _padding, child: w),
       ),
